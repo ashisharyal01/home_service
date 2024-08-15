@@ -1,0 +1,33 @@
+<div class="modal-header bg-custom">
+  <h4 class="modal-title text-light"> <i class="bi bi-people-fill"></i>
+    View User
+  </h4> <button type="button" class="close text-light" data-bs-dismiss="modal" aria-label="Close"
+    (click)="currentModal.dismiss('Cross click')">
+    <i class="bi bi-x"></i>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="row m-0 mb-3"><span class="font-weight-bold col-md-3"> User Name:</span> <span class="col">{{ fullName ?
+      fullName : '- - - -' }}</span></div>
+  <div class="row m-0 mb-3"><span class="font-weight-bold col-md-3"> Email:</span> <span class="col">{{ email ? email :
+      '- - - -' }}</span></div>
+  <div class="row m-0 mb-3"><span class="font-weight-bold col-md-3"> Address:</span> <span class="col">{{ address ?
+      address : '- - - -' }}</span></div>
+  <div class="row m-0 mb-3"><span class="font-weight-bold col-md-3"> Number:</span> <span class="col">{{ mobileNumber ?
+      mobileNumber : '- - - -' }}</span></div>
+  <div class="row m-0 mb-3"><span class="font-weight-bold col-md-3"> Gender:</span> <span class="col">{{ gender ? gender
+      : '- - - -' }}</span></div>
+  <div class="row m-0 mb-3"><span class="font-weight-bold col-md-3"> Date of Birth:</span> <span class="col">{{
+      dateOfBirth ? dateOfBirth : '- - - -'}}</span></div>
+</div>
+
+<div class="modal-footer">
+  <div class="row w-100">
+    <div class="col-12">
+      <button type="reset" class="btn w-100 btn-danger ml-1" (click)="currentModal.close('Close click')">
+        <span class="d-none d-sm-block"> Close</span>
+      </button>
+    </div>
+  </div>
+</div>

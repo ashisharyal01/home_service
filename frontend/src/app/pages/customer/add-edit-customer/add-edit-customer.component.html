@@ -1,0 +1,97 @@
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title text-light"> <i class="bi bi-people-fill"></i>
+                <span *ngIf="isAddMode">
+                    Add Customer
+                </span>
+                <span *ngIf="isEditMode">
+                    Edit Customer
+                </span>
+            </h4>
+            <button type="button" class="close text-light" data-bs-dismiss="modal" aria-label="Close"
+                (click)="closeModal()">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+        <form [formGroup]="customersForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                <div class="form-group has-icon-left">
+                    <label class="form-label" i18n="@@customerOrFirmName">Customer/Firm Name <span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" formControlName="customerName" id="customerName"
+                            i18n-placeholder placeholder="Enter customer name">
+                        <div class="form-control-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <small class="form-text text-danger"
+                            *ngIf="customersForm.controls.customerName.hasError('required') && customersForm.controls.customerName.touched"
+                            style="margin-top: -1rem;">
+                            Customer/Firm name is required
+                        </small>
+                    </div>
+                </div>
+                <br>
+
+                <div class="form-group has-icon-left">
+                    <label class="form-label" i18n="@@customerAddress">Customer/Frim Address <span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" formControlName="customerAddress" id="customerAddress"
+                            i18n-placeholder placeholder="Enter customer or firm address">
+                        <div class="form-control-icon">
+                            <i class="bi bi-person-rolodex"></i>
+                        </div>
+                        <small class="form-text text-danger"
+                            *ngIf="customersForm.controls.customerAddress.hasError('required') && customersForm.controls.customerAddress.touched"
+                            style="margin-top: -1rem;">
+                            Customer/Firm Address is required
+                        </small>
+                    </div>
+                </div>
+                <br>
+
+                <div class="form-group has-icon-left">
+                    <label class="form-label" i18n="@@customerContactNumber">Customer/Frim Contact Number <span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" formControlName="customerPhoneNumber"
+                            id="customerPhoneNumber" i18n-placeholder
+                            placeholder="Enter customer or firm contact Number">
+                        <div class="form-control-icon">
+                            <i class="bi bi-phone-fill"></i>
+                        </div>
+                        <small class="form-text text-danger"
+                            *ngIf="customersForm.controls.customerPhoneNumber.hasError('required') && customersForm.controls.customerPhoneNumber.touched"
+                            style="margin-top: -1rem;">
+                            Customer/Firm Contact Number is required
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-6">
+                        <button *ngIf="isAddMode" type="submit" class="btn w-100 btn-primary" i18n="@@submit"
+                            [disabled]="submitted || !customersForm.valid">
+                            <span class="d-none d-sm-block"> <span class="spinner-border spinner-border-sm"
+                                    role="status" aria-hidden="true" *ngIf="this.loading"></span> Submit</span>
+                        </button>
+
+                        <button *ngIf="isEditMode" type="submit" class="btn w-100 btn-primary" i18n="@@update"
+                            [disabled]="submitted || !customersForm.valid">
+                            <span class="d-none d-sm-block"> <span class="spinner-border spinner-border-sm"
+                                    role="status" aria-hidden="true" *ngIf="this.loading"></span> Update</span>
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button type="reset" class="btn w-100 btn-danger ml-1" (click)="closeModal()">
+                            <span class="d-none d-sm-block"> Close</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

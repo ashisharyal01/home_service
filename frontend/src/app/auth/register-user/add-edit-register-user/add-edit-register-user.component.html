@@ -1,0 +1,229 @@
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title text-light"> <i class="bi bi-people-fill"></i>
+        <span *ngIf="isAddMode">
+          Add User
+        </span>
+        <span *ngIf="isEditMode">
+          Edit User
+        </span>
+      </h4>
+      <button type="button" class="close text-light" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+    <form [formGroup]="usersForm" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <div class="form-group has-icon-left" style=" margin-bottom: -25px;">
+          <div *ngIf="isAddMode">
+            <div class="profile-img-wrap edit-img"><img class="inline-block" [src]="staticUserImage" alt="User Image">
+              <div class="fileupload btn"><span class="btn-text">UPLOAD</span><input class="upload" type="file"
+                  formControlName="profilePictureId" name="profilePictureId" (change)="onFileChange($event)"></div>
+            </div>
+          </div>
+
+          <div *ngIf="!isAddMode">
+            <div class="profile-img-wrap edit-img"><img class="inline-block" src="{{this.showImageForEdit}}"
+                alt="User Image">
+              <div class="fileupload btn"><span class="btn-text">UPLOAD</span><input class="upload" type="file"
+                  formControlName="profilePictureId" name="profilePictureId" (change)="onFileChange($event)"></div>
+            </div>
+          </div>
+        </div>
+        <br>
+
+        <div class="row">
+          <div class="form-group has-icon-left col-4">
+            <label class="form-label" i18n="@@name">Name <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <input type="text" class="form-control" formControlName="fullName" id="fullName" i18n-placeholder
+                placeholder="Enter user name">
+              <div class="form-control-icon">
+                <i class="bi bi-people-fill"></i>
+              </div>
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.fullName.hasError('required') && usersForm.controls.fullName.touched"
+                style="margin-top: -1rem;">
+                Name is required
+              </small>
+            </div>
+          </div>
+          <br>
+
+          <div class="form-group has-icon-left col-4">
+            <label class="form-label" i18n="@@email">Email <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <input type="text" class="form-control" formControlName="email" id="email" i18n-placeholder
+                placeholder="Enter user email">
+              <div class="form-control-icon">
+                <i class="bi bi-envelope-paper"></i>
+              </div>
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.email.hasError('required') && usersForm.controls.email.touched"
+                style="margin-top: -1rem;">
+                Email is required
+              </small>
+            </div>
+          </div>
+          <br>
+
+          <div class="form-group has-icon-left col-4">
+            <label class="form-label" i18n="@@mobileNumber"> Mobile Number <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <input type="text" class="form-control" formControlName="mobileNumber" id="mobileNumber" i18n-placeholder
+                placeholder="Enter user mobile number">
+              <div class="form-control-icon">
+                <i class="bi bi-phone-fill"></i>
+              </div>
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.mobileNumber.hasError('required') && usersForm.controls.mobileNumber.touched"
+                style="margin-top: -1rem;">
+                Mobile Number is required
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group has-icon-left col-4" *ngIf="isAddMode">
+            <label class="form-label" i18n="@@password"> Password: <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <input type="text" class="form-control" name="password" formControlName="password"
+                [type]="hide1 ? 'password': 'text' " i18n-placeholder placeholder="Enter passoword">
+              <div class="form-control-icon">
+                <i class="{{ hide1 ? 'bi bi-lock-fill' : 'bi bi-unlock-fill' }}" aria-hidden="true"
+                  (click)="hide1 = !hide1"></i>
+              </div>
+
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.password.hasError('required') && usersForm.controls.password.touched"
+                i18n="@@passwordIsRequired">
+                Password is required!
+              </small>
+
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.password.hasError('pattern') && usersForm.controls.password.dirty"
+                i18n="@@atLeastCharacters">
+                At least 8 characters!
+              </small>
+
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.password.hasError('pattern') && usersForm.controls.password.dirty"
+                i18n="@@atLeastOneUpperCaseLetter">
+                At least one uppercase letter!
+              </small>
+
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.password.hasError('pattern') && usersForm.controls.password.dirty"
+                i18n="@@atLeastOneDigit">
+                At least one digit!
+              </small>
+
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.password.hasError('pattern') && usersForm.controls.password.dirty"
+                i18n="@@atLeastOneSpecialChar">
+                At least one special character!
+              </small>
+            </div>
+          </div>
+          <br>
+
+          <div class="form-group has-icon-left col-4" *ngIf="isAddMode">
+            <label class="form-label" i18n="@@confirmPassword">Confirm Password:<span
+                class="text-danger">*</span></label>
+            <div class="position-relative">
+              <input type="text" class="form-control" name="confirmPassword" formControlName="confirmPassword"
+                [type]="hide2 ? 'password': 'text' " i18n-placeholder placeholder="Enter confirm password">
+              <div class="form-control-icon">
+                <i class="{{ hide2 ? 'bi bi-lock-fill' : 'bi bi-unlock-fill'  }}" aria-hidden="true"
+                  (click)="hide2 = !hide2"></i>
+              </div>
+            </div>
+            <small class="form-text text-danger"
+              *ngIf="usersForm.controls.confirmPassword.hasError('required') && usersForm.controls.confirmPassword.touched"
+              style="margin-top: -0.5rem;">
+              Confirm Password is required
+            </small>
+          </div>
+          <br>
+
+          <div class="form-group has-icon-left col-4">
+            <label class="form-label" i18n="@@address"> Address <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <input type="text" class="form-control" formControlName="address" id="address" i18n-placeholder
+                placeholder="Enter user address">
+              <div class="form-control-icon">
+                <i class="bi bi-pin-map"></i>
+              </div>
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.address.hasError('required') && usersForm.controls.address.touched"
+                style="margin-top: -1rem;">
+                User Address is required
+              </small>
+            </div>
+          </div>
+          <br>
+
+          <div class="form-group has-icon-left col-4">
+            <label class="form-label" i18n="@@gender">Gender <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <div class="form-control-icon">
+                <i class="bi bi-gender-ambiguous"></i>
+              </div>
+              <select class="form-control input-height" name="gender" formControlName="gender">
+                <option value="" disabled=" true">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Others">Others</option>
+              </select>
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.gender.hasError('required') && usersForm.controls.gender.touched"
+                style="margin-top: -1rem;">
+                Gender is required
+              </small>
+            </div>
+          </div>
+          <br>
+
+          <div class="form-group has-icon-left col-4">
+            <label class="form-label" i18n="@@dateOfBirth">Date of Birth <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <input type="date" class="form-control" formControlName="dateOfBirth" id="dateOfBirth" i18n-placeholder
+                placeholder="Enter user date of birth">
+              <div class="form-control-icon">
+                <i class="bi bi-calendar4-event"></i>
+              </div>
+              <small class="form-text text-danger"
+                *ngIf="usersForm.controls.dateOfBirth.hasError('required') && usersForm.controls.dateOfBirth.touched"
+                style="margin-top: -1rem;">
+                Date of Birth is required
+              </small>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row w-100">
+          <div class="col-6">
+            <button *ngIf="isAddMode" type="submit" class="btn w-100 btn-primary" i18n="@@submit"
+              [disabled]="submitted || !usersForm.valid">
+              <span class="d-none d-sm-block"> <span class="spinner-border spinner-border-sm" role="status"
+                  aria-hidden="true" *ngIf="this.loading"></span> Submit</span>
+            </button>
+
+            <button *ngIf="isEditMode" type="submit" class="btn w-100 btn-primary" i18n="@@update"
+              [disabled]="submitted || !usersForm.valid">
+              <span class="d-none d-sm-block"> <span class="spinner-border spinner-border-sm" role="status"
+                  aria-hidden="true" *ngIf="this.loading"></span> Update</span>
+            </button>
+          </div>
+          <div class="col-6">
+            <button type="reset" class="btn w-100 btn-danger ml-1" (click)="closeModal()">
+              <span class="d-none d-sm-block"> Close</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

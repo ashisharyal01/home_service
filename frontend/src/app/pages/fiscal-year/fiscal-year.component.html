@@ -1,0 +1,89 @@
+<div class="card mt-5">
+    <div class="card-body p-1">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <h6 class="card-title">Fiscal Year&nbsp;&nbsp;</h6>
+                <li class="breadcrumb-item"><a routerLink="pages/dashboard">(Dashboard </a></li>
+                <li class="breadcrumb-item active" aria-current="page">Fiscal Year)</li>
+
+                <div class="buttons addButtons">
+                    <a class="btn btn-sm btn-primary" (click)="addFiscalYear()"><i class="bi bi-plus-circle-fill"></i>
+                        ADD</a>
+                </div>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body p-2">
+        <table class="table" id="table1">
+            <thead class="thead-dark">
+                <tr>
+                    <th>S.N</th>
+                    <th>Fiscal Year</th>
+                    <th>Status</th>
+                    <th>Set Fiscal Year</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="years.length == 0">
+                    <td class="text-center" colspan="5" *ngIf="this.displayLoader">
+                        <img src="../../../assets/images/svg-loaders/grid.svg" class="me-4" style="width: 2rem"
+                            alt="audio">
+                        <div class="mt-2">
+                            <h6 scope="col gray-ish">Please Wait</h6>
+                        </div>
+                    </td>
+
+                    <td class="text-muted text-center" colspan="5" *ngIf="this.dispalyNotFoundData">
+                        No Fiscal Year Details Found.
+                    </td>
+                </tr>
+                <tr *ngFor="let yearsData of years| paginate : {
+                  itemsPerPage: size,
+                  currentPage: page,
+                  totalItems: totalCount
+                  }; index as i">
+                    <td scope="row">{{(size*PageNumber)+i+1}}</td>
+                    <td>{{yearsData.year}}</td>
+                    <td>
+                        <span
+                            class="badge   {{ yearsData.status == true ? 'bg-primary' : 'bg-danger' }}">{{yearsData.status
+                            == true ? "ACTIVE" : "IN ACTIVE"}}</span>
+                    </td>
+                    <td><label class="switch">
+                            <input type="checkbox" [checked]="yearsData.status" (click)="onSetFiscalYear(yearsData.id)">
+                            <span class="slider round"></span>
+                        </label>
+
+                    </td>
+                    <td>
+
+                        <div class="buttons">
+                            <a class="btn btn-sm btn-warning" (click)="editFiscalYear(yearsData.id)"><i
+                                    class="bi bi-pencil-square"></i></a>
+
+                            <a class="btn btn-sm btn-danger" (click)="onDeleteFiscalYear(yearsData.id)"><i
+                                    class="bi bi-trash2-fill"></i></a>
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+          <div class="col-md-6" style="margin-right: auto;">
+            <pagination-controls (pageChange)="pageChange($event)">
+            </pagination-controls>
+          </div>
+          <div class="col-md-3" style="margin-left: auto;">
+            <select (change)="noOfRecordsSizeChange()" class="form-control" [(ngModel)]="size">
+              <option *ngFor="let size of numberOfDatasInArray" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+        </div>
+    </div>
+</div>

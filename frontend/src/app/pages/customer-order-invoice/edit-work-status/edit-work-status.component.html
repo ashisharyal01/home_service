@@ -1,0 +1,53 @@
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title text-light" id="myModalLabel33"> <i class="bi bi-calendar-check-fill"></i>
+                <span>
+                    Edit Work Status
+                </span>
+            </h4>
+            <button type="button" class="close text-light" data-bs-dismiss="modal" aria-label="Close"
+                (click)="closeModal()">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+        <form [formGroup]="editWorkStatusForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                <div class="form-group col-12 has-icon-left">
+                    <label class="form-label" i18n="@@selectCategory">Select Order Status <span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <select class="choices form-select" i18n-placeholder="@@selectWorkStatus" name="workStatus"
+                            formControlName="workStatus">
+                            <option value="inProgress" selected>In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <small class="form-text text-danger"
+                        *ngIf="editWorkStatusForm.controls.workStatus.hasError('required') && editWorkStatusForm.controls.workStatus.touched"
+                        style="margin-top: -1rem;">
+                        Order Status is required
+                    </small>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-6">
+                        <button type="submit" class="btn w-100 btn-primary" i18n="@@update"
+                            [disabled]="submitted || !editWorkStatusForm.valid">
+                            <span class="d-none d-sm-block"> <span class="spinner-border spinner-border-sm"
+                                    role="status" aria-hidden="true" *ngIf="this.loading"></span> Update</span>
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button type="reset" class="btn w-100 btn-danger ml-1" (click)="closeModal()">
+                            <span class="d-none d-sm-block">Close</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

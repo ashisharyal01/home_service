@@ -1,0 +1,352 @@
+<div class="card breadcumbDetailsCard mt-5">
+    <div class="card-body p-1">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <h6 class="card-title">Customer Invoice&nbsp;&nbsp;</h6>
+                <li class="breadcrumb-item"><a [routerLink]="['/pages/dashboard']">(Dashboard </a></li>
+                <li class="breadcrumb-item"><a [routerLink]="['/pages/customer-order-invoice']">Customer Invoice</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Add Customer Invoice)</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body p-2">
+        <form [formGroup]="customerInvoiceForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="form-group col-4 has-icon-left">
+                    <label class="form-label" i18n="@@customerInfo">Select Customer <span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <!-- <ng-multiselect-dropdown [placeholder]="'Select Customer'" class="customerInfo"
+                            id="customerInfo" name="customerDatas" formControlName="customerId"
+                            [settings]="customerInfo" [data]="customerDetails" (onSelect)="onItemSelect($event)">
+                        </ng-multiselect-dropdown> -->
+
+                        <select class="choices form-select" i18n-placeholder="@@customerInfo" name="categoryId"
+                            formControlName="customerId">
+                            <option value="" disabled="true">Select Customer</option>
+                            <option *ngFor="let customerInfo of customerDetails" [value]="customerInfo.id">
+                                {{ customerInfo.customerName }}, {{ customerInfo.customerPhoneNumber}}
+                            </option>
+                        </select>
+                    </div>
+                    <small class="form-text text-danger"
+                        *ngIf="customerInvoiceForm.controls.customerId.hasError('required') && customerInvoiceForm.controls.customerId.touched"
+                        style="margin-top: -1rem;">
+                        Customer Name is required
+                    </small>
+                </div>
+
+                <div class="form-group col-4 has-icon-left">
+                    <label class="form-label" i18n="@@orderLocation">Order Location <span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" formControlName="orderLocation" id="orderLocation"
+                            i18n-placeholder placeholder="Enter order location">
+                        <div class="form-control-icon">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <small class="form-text text-danger"
+                            *ngIf="customerInvoiceForm.controls.orderLocation.hasError('required') && customerInvoiceForm.controls.orderLocation.touched"
+                            style="margin-top: -1rem;">
+                            Order Location is required
+                        </small>
+                    </div>
+                </div>
+
+                <!-- <div class="form-group col-4 has-icon-left">
+                    <label class="form-label" i18n="@@customerOrderInvoiceNo">Invoice Number <span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" formControlName="orderInvoiceNo" id="orderInvoiceNo"
+                            i18n-placeholder placeholder="Enter customer order invoice number">
+                        <div class="form-control-icon">
+                            <i class="bi bi-receipt"></i>
+                        </div>
+                        <small class="form-text text-danger"
+                            *ngIf="customerInvoiceForm.controls.orderInvoiceNo.hasError('required') && customerInvoiceForm.controls.orderInvoiceNo.touched"
+                            style="margin-top: -1rem;">
+                            Invoice number is required
+                        </small>
+                    </div>
+                </div> -->
+
+                <div class="form-group col-4 has-icon-left">
+                    <label class="form-label" i18n="@@orderDate">Order Date <span class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="datetime-local" class="form-control" name="orderDate" formControlName="orderDate"
+                            i18n-placeholder placeholder="Enter order Date">
+                        <div class="form-control-icon">
+                            <i class="bi bi-calendar-check-fill"></i>
+                        </div>
+                        <small class="form-text text-danger"
+                            *ngIf="customerInvoiceForm.controls.orderDate.hasError('required') && customerInvoiceForm.controls.orderDate.touched"
+                            style="margin-top: -1rem;">
+                            Order Location is required
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group col-4 has-icon-left">
+                    <label class="form-label" i18n="@@selectCategory">Select Order Status <span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <select class="choices form-select" i18n-placeholder="@@selectCustomer" name="workStatus"
+                            formControlName="workStatus">
+                            <option value="inProgress" selected>In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <small class="form-text text-danger"
+                        *ngIf="customerInvoiceForm.controls.workStatus.hasError('required') && customerInvoiceForm.controls.workStatus.touched"
+                        style="margin-top: -1rem;">
+                        Order Status is required
+                    </small>
+                </div>
+            </div>
+            <hr>
+            <div class="col-12 mb-3">
+                <div formGroupName="orderItemsArray">
+                    <div class="headings d-flex">
+                        <div class="panel-heading">
+                            <strong>Details of Ordered Items</strong>
+                        </div>
+
+                        <div class="setup-heading">
+                            <div class="buttons addButtons">
+                                <a class="btn btn-sm btn-primary" (click)="addCustomer()"><i
+                                        class="bi bi-plus-circle-fill"></i>
+                                    ADD Customer</a>
+                            </div>
+
+                            <div class="buttons addButtons">
+                                <a class="btn btn-sm btn-success" (click)="addItem()"><i
+                                        class="bi bi-plus-circle-fill"></i>
+                                    ADD Items</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table table-responsive" *ngIf="customerInvoiceForm.controls.orderItemsArray!=null">
+                        <table class="table" id="table1">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" i18n="@@sn">S.N</th>
+                                    <th scope="col" i18n="@@selectProduct"><strong>Select Product </strong>
+                                        <span class="text-danger">*</span>
+                                    </th>
+                                    <th scope="col" i18n="@@sn">Remarks</th>
+                                    <th scope="col" i18n="@@rate"><strong>Rate</strong><span
+                                            class="text-danger">*</span></th>
+                                    <th scope="col" i18n="@@quantity"><strong>Quantity</strong><span
+                                            class="text-danger">*</span>
+                                    </th>
+                                    <th scope="col" i18n="@@totalPrice"><strong>Total Price</strong></th>
+                                    <th scope="col" colspan="2" style="padding: 5px !important;">
+                                        <strong>Actions</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let itemRow of getOrderItemsArray(); let i=index" [formGroupName]="i"
+                                    id='addr{{i}}'>
+                                    <td>{{i+1}}</td>
+                                    <td style="width: 20%;">
+                                        <div>
+                                            <select class="choices form-select" i18n-placeholder="@@items"
+                                                name="itemId[]" formControlName="itemId" id="itemId_{{i}}">
+                                                <option value='' disabled="true">Select Item Name</option>
+                                                <option *ngFor="let item of itemDetails" [value]="item.id">
+                                                    {{ item.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </td>
+
+                                    <!-- <td style="width: 28%;">
+                                        <div style="width:90%">
+                                            <ng-multiselect-dropdown [placeholder]="'Select products'" class="itemId"
+                                                id="itemId" name="itemData[]" formControlName="itemId"
+                                                [settings]="itemId" [data]="itemDetails">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                    </td> -->
+
+                                    <td>
+                                        <textarea type="text" class="form-control" rows="1" cols="20"
+                                            name="itemRemarks[]" id='itemRemarks_{{i}}' formControlName="itemRemarks"
+                                            i18n-placeholder="@@itemRemarks"
+                                            placeholder="Enter product remarks"></textarea>
+
+
+                                    </td>
+
+                                    <td>
+                                        <input class="form-control itemPrice" data-type="itemPrice"
+                                            formControlName="itemPrice" min="0" type="number" id='itemPrice_{{i}}'
+                                            name="itemPrice[]" placeholder="Enter price" i18n-placeholder="@@itemPrice"
+                                            (input)="getValues()">
+                                    </td>
+                                    <td>
+                                        <input class="form-control quantity" data-type="quantity" type="number" min="0"
+                                            id='quantity_{{i}}' name="quantity[]" i18n-placeholder="@@itemQuantity"
+                                            placeholder="Enter quantity" name="quantity" formControlName="quantity"
+                                            (input)="getValues()">
+                                    </td>
+
+                                    <td>
+                                        <input class="form-control total_cost" type='text' id='total_cost_{{i}}'
+                                            name='total_cost[]' readonly
+                                            style="background-color: #c4c5c571; cursor: not-allowed">
+                                    </td>
+
+                                    <td class="p-0">
+                                        <div class="buttons">
+                                            <a class="btn btn-sm btn-primary" (click)="addNewRow()"><i
+                                                    class="bi bi-plus-circle-fill"></i></a>
+                                        </div>
+                                    </td>
+
+                                    <td class="p-0">
+                                        <div class="buttons">
+                                            <a class="btn btn-sm btn-danger" (click)="deleteRow(i)"><i
+                                                    class="bi bi-trash2-fill"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex w-100 mb-3" style="background: #e6e7e771;">
+                <div class="form-group col-4 with-title">
+                    <label class="form-label" i18n="@@remarks">Remarks </label>
+                    <textarea type="text" class="form-control" rows="7" cols="100" name="remarks"
+                        formControlName="remarks" i18n-placeholder placeholder="Enter remarks"></textarea>
+                </div>
+
+                <div class="row mt-2" id="calculationSection">
+                    <div class="form-group">
+                        <div class="d-flex"><label class="text-nowrap"><b>Sub Total:&nbsp;&nbsp;</b></label>
+                            <input class="form-control totalOrderAmount" type='text' id='totalOrderAmount'
+                                formControlName="totalOrderAmount" name='totalOrderAmount' readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="discountAmounts">
+                        <div class="d-flex"><label class="text-nowrap"><b>Discount Amount: </b></label>
+                            <input class="form-control discountAmount" type='number' id='discountAmount' min="0"
+                                formControlName="discountAmount" name='discountAmount'
+                                (input)="getValueOfDiscountAmount($event)">
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="totalAmount">
+                        <div class="d-flex"><label class="text-nowrap"><b>Total Amount: </b></label>
+                            <input class="form-control grandTotal" type='number' id='grandTotal'
+                                formControlName="grandTotal" name='grandTotal' readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row transactionDetails">
+                <h6 class="mt-2">Transaction Details</h6>
+                <div class="col-{{ this.bootstrapGridValue }} form-group">
+                    <label class="form-label" i18n="@@selectPaymentStatus">Select Payment Status <span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <select class="choices form-select" i18n-placeholder="@@paymentStatus" name="paymentStatus"
+                            formControlName="paymentStatus" (change)="getSelectedPaymentStatus($event)">
+                            <option value="noPayment">No Payment</option>
+                            <option value="partialPayment">Partial Payment</option>
+                            <option value="fullPayment">Full Payment</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-{{ this.bootstrapGridValue }} form-group has-icon-left" *ngIf="showPaidAmountInput">
+                    <label class="form-label" i18n="@@paidAmount">Paid Amount <span class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="number" class="form-control" placeholder="Enter paid amount" id="paidAmount"
+                            formControlName="paidAmount">
+                        <div class="form-control-icon">
+                            <i class="bi bi-cash"></i>
+                        </div>
+                    </div>
+                    <small class="form-text text-danger"
+                        *ngIf="customerInvoiceForm.controls.paidAmount.hasError('min') && customerInvoiceForm.controls.paidAmount.touched"
+                        style="margin-top: -1rem;">
+                        Paid amount should be at least 10!
+                    </small>
+                </div>
+
+                <div class="col-{{ this.bootstrapGridValue }} form-group has-icon-left">
+                    <label class="form-label" i18n="@@paymentMethod">Payment Method<span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <div class="position-relative">
+                            <select class="choices form-select" i18n-placeholder="@@paymentMethod" name="paymentMethod"
+                                formControlName="paymentMethod">
+                                <option value="cash">Cash</option>
+                                <option value="cheque">Cheque</option>
+                                <option value="e-sewa">E-Sewa</option>
+                                <option value="mobile-banking">Mobile Banking</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                    <small class="form-text text-danger"
+                        *ngIf="customerInvoiceForm.controls.paymentMethod.hasError('required') && customerInvoiceForm.controls.paymentMethod.touched"
+                        style="margin-top: -1rem;">
+                        Payment method is reuired!
+                    </small>
+                </div>
+
+                <div class="col-{{ this.bootstrapGridValue }} form-group has-icon-left">
+                    <label class="form-label" i18n="@@transactionDate">Transaction Date<span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="date" class="form-control" placeholder="Enter transaction date"
+                            id="transactionDate" formControlName="transactionDate">
+                        <div class="form-control-icon">
+                            <i class="bi bi-calendar-check-fill"></i>
+                        </div>
+                    </div>
+                    <small class="form-text text-danger"
+                        *ngIf="customerInvoiceForm.controls.transactionDate.hasError('required') && customerInvoiceForm.controls.transactionDate.touched"
+                        style="margin-top: -1rem;">
+                        Transaction date is reuired!
+                    </small>
+                </div>
+            </div>
+            <div class="form-group col-12 with-title mt-3">
+                <label class="form-label" i18n="@@transactionRemarks">Transaction Remarks </label>
+                <textarea type="text" class="form-control" rows="7" cols="100" name="transactionRemarks"
+                    formControlName="transactionRemarks" i18n-placeholder
+                    placeholder="Enter transaction remarks"></textarea>
+            </div>
+
+            <div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-6">
+                        <button type="submit" class="btn w-100 btn-primary" i18n="@@submit"
+                            [disabled]="submitted || !customerInvoiceForm.valid">
+                            <span class="d-none d-sm-block"> <span class="spinner-border spinner-border-sm"
+                                    role="status" aria-hidden="true" *ngIf="this.loading"></span> Submit</span>
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button type="reset" class="btn w-100 btn-danger ml-1">
+                            <span class="d-none d-sm-block"> Cancel</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

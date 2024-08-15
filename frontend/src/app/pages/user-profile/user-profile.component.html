@@ -1,0 +1,45 @@
+<div class="modal-header bg-custom">
+  <h4 class="modal-title text-light"> <i class="bi bi-person"></i>
+    View Profile
+  </h4> <button type="button" class="close text-light" data-bs-dismiss="modal" aria-label="Close"
+    (click)="currentModal.dismiss('Cross click')">
+    <i class="bi bi-x"></i>
+  </button>
+</div>
+
+<div class="modal-body row">
+  <div class="row mb-3">
+    <span class="text-center col"><img class="profileImg" src="../../../assets/images/logo/dummy-user.png" height="100"
+        alt="Profile Picture"></span>
+  </div>
+  <div class="col-md-6 m-0 mb-3"><span class="title col-md-3"> Name: </span> <span class="col data">{{ this.fullName
+      ?
+      this.fullName : '- - - -'}}</span>
+  </div>
+  <div class="col-md-6 m-0 mb-3"><span class="title col-md-3"> Email: </span> <span class="col data">{{ this.email ?
+      this.email : '- - - -'}}</span>
+  </div>
+  <div class="col-md-6 m-0 mb-3"><span class="title col-md-3"> Address: </span> <span class="col data">{{
+      this.address ?
+      this.address : '- - - -'}}</span>
+  </div>
+  <div class="col-md-6 m-0 mb-3"><span class="title col-md-3"> Mobile Number: </span> <span class="col data">{{
+      this.mobileNumber ? this.mobileNumber : '- - - -'}}</span>
+  </div>
+  <div class="col-md-6 m-0 mb-3"><span class="title col-md-3"> DateOfBirth: </span> <span class="col data">{{
+      this.dateOfBirth ? this.dateOfBirth : '- - - -'}}</span>
+  </div>
+  <div class="col-md-6 m-0 mb-3"><span class="title col-md-3"> Gender: </span> <span class="col data">{{
+      this.gender ? this.gender : '- - - -'}}</span>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="row w-100">
+    <div class="col-12">
+      <button type="reset" class="btn w-100 btn-danger ml-1" (click)="currentModal.close('Close click')">
+        <span class="d-none d-sm-block"> Close</span>
+      </button>
+    </div>
+  </div>
+</div>

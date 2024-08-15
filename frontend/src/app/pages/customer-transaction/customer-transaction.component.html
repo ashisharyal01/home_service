@@ -1,0 +1,141 @@
+<div class="card mt-5">
+    <div class="card-body p-1">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <h6 class="card-title">Customer Transaction&nbsp;&nbsp;</h6>
+                <li class="breadcrumb-item"><a [routerLink]="['/pages/dashboard']">(Dashboard </a></li>
+                <li class="breadcrumb-item active" aria-current="page">Customer-Transaction)</li>
+                <div class="search-field">
+                    <div id="search-field-input" class="form-group has-icon-left">
+                        <div class="position-relative">
+                            <input type="text" id="search-field-id" class="form-control" (keyup)="getValue($event)">
+                            <div class="form-control-icon">
+                                <i class="bi bi-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons addButtons">
+                    <a class="btn btn-sm btn-primary" (click)="addCustomerTransaction()"><i
+                            class="bi bi-plus-circle-fill"></i>
+                        ADD</a>
+                </div>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body p-2">
+        <table class="table" id="table1">
+            <thead class="thead-dark">
+                <tr>
+                    <th i18n="@@sn">S.N</th>
+                    <th i18n="@@customer">Customer</th>
+                    <th i18n="@@transactionNo">Transaction No.</th>
+                    <th i18n="@@paidAmount">Paid Amount</th>
+                    <th i18n="@@paymentMethod">Payment Method</th>
+                    <th i18n="@@transactionDate">Transaction Date</th>
+                    <th i18n="@@registerType">RegisteredBy</th>
+                    <th i18n="@@action">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="customerTransaction?.length == 0">
+                    <td class="text-center" colspan="8" *ngIf="this.displayLoader">
+                        <img src="../../../assets/images/svg-loaders/grid.svg" class="me-4" style="width: 2rem"
+                            alt="audio">
+                        <div class="mt-2">
+                            <h6 scope="col gray-ish">Please Wait</h6>
+                        </div>
+                    </td>
+
+                    <td class="text-muted text-center" colspan="8" *ngIf="this.dispalyNotFoundData">
+                        No Customer Transaction Details Found.
+                    </td>
+                </tr>
+                <tr *ngFor="let customerTransactionDetails of customerTransaction| paginate : {
+                  itemsPerPage: size,
+                  currentPage: page,
+                  totalItems: totalCount
+                  }; index as i">
+                    <td> {{(size*PageNumber)+i+1}}</td>
+                    <td>
+                        {{
+                        customerTransactionDetails.customer.customerName
+                        ? customerTransactionDetails.customer.customerName
+                        : '- - - -'
+                        }}
+                    </td>
+                    <td>
+                        {{
+                        customerTransactionDetails.orderTransactionNo
+                        ? customerTransactionDetails.orderTransactionNo
+                        : '- - - -'
+                        }}
+                    </td>
+
+                    <td>
+                        {{
+                        customerTransactionDetails.paidAmount
+                        ? customerTransactionDetails.paidAmount
+                        : '- - - -'
+                        }}
+                    </td>
+
+                    <td>
+                        <span
+                            class="badge {{ customerTransactionDetails.paymentMethod == 'esewa' ? 'bg-success' : customerTransactionDetails.paymentMethod == 'khalti' ? 'bg-primary' : customerTransactionDetails.paymentMethod == 'mobile banking' ? 'bg-warning' : 'bg-secondary'  }}">
+                            {{
+                            (customerTransactionDetails.paymentMethod )
+                            ? (customerTransactionDetails.paymentMethod )
+                            : '- - - -'
+                            }}
+                        </span>
+                    </td>
+
+                    <td>
+                        {{
+                        (customerTransactionDetails.transactionDate | date )
+                        ? (customerTransactionDetails.transactionDate | date )
+                        : '- - - -'
+                        }}
+                    </td>
+                    <td>
+                        {{
+                        (customerTransactionDetails.RegisterUser.fullName )
+                        ? (customerTransactionDetails.RegisterUser.fullName)
+                        : '- - - -'
+                        }}
+                    </td>
+                    <td>
+                        <div class="buttons">
+
+                            <a class="btn btn-sm btn-primary"
+                                (click)="viewCustomerTransaction(customerTransactionDetails)"><i
+                                    class="bi bi-eye-fill"></i></a>
+
+
+                            <!-- <a class="btn btn-sm btn-warning"
+                                (click)="viewCustomerTransactionById(customerTransactionDetails.id)"><i
+                                    class="bi bi-trash2-fill"></i></a> -->
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+          <div class="col-md-6" style="margin-right: auto;">
+            <pagination-controls (pageChange)="pageChange($event)">
+            </pagination-controls>
+          </div>
+          <div class="col-md-3" style="margin-left: auto;">
+            <select (change)="noOfRecordsSizeChange()" class="form-control" [(ngModel)]="size">
+              <option *ngFor="let size of numberOfDatasInArray" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+        </div>
+    </div>
+</div>

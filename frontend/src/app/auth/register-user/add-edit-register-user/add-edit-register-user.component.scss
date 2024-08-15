@@ -1,0 +1,57 @@
+.profile-img-wrap.edit-img {
+  border-radius: 50%;
+  margin: 0 auto 30px;
+  position: relative;
+}
+
+.profile-img-wrap {
+  height: 120px;
+  width: 120px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.profile-img-wrap img {
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  border: 3px solid;
+}
+
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+
+.profile-img-wrap.edit-img .fileupload.btn {
+  left: 0;
+}
+
+.btn:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+
+.fileupload.btn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: rgba(33, 33, 33, 0.5);
+  border-radius: 0;
+  padding: 3px 10px;
+  border: none;
+}
+
+.btn-text {
+  color: #fff;
+}
+
+.fileupload input.upload {
+  cursor: pointer;
+  filter: alpha(opacity=0);
+  font-size: 20px;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  right: -3px;
+  top: -3px;
+}

@@ -1,0 +1,53 @@
+<div class="auth_login">
+    <div class="container col-md-3 py-5">
+        <div class="card">
+            <div class="card-header text-center">
+                <img src="../../../assets/images/logo/header.svg" alt="" height="100">
+                <h6 class="mt-3">LOGIN TO YOUR ACCOUNT</h6>
+
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="form-group has-icon-left">
+                                        <label for="email-id-icon">Email</label>
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control" formControlName="email"
+                                                placeholder="Enter your email" id="email-id-icon">
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-envelope-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group has-icon-left">
+                                        <label for="password-id-icon">Password</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" formControlName="password"
+                                                placeholder="Enter your password" id="password-id-icon"
+                                                [type]="hide ? 'password': 'text' ">
+                                            <div class="form-control-icon">
+                                                <i class="{{ hide ? 'bi bi-lock-fill' : 'bi bi-unlock-fill' }}"
+                                                    aria-hidden="true" (click)="hide = !hide"></i>
+                                                <!-- <i class="bi bi-lock"></i> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1 w-100">Sign In</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

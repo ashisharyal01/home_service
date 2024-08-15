@@ -1,0 +1,50 @@
+<div class="modal-header bg-custom">
+    <h4 class="modal-title text-light"> <i class="bi bi-cash-stack"></i>
+        View Customer Transaction
+    </h4> <button type="button" class="close text-light" data-bs-dismiss="modal" aria-label="Close"
+        (click)="currentModal.dismiss('Cross click')">
+        <i class="bi bi-x"></i>
+    </button>
+</div>
+
+<div class="modal-body row">
+    <div class="row m-0 mb-3"><span class="title col-md-6"> Customer Name:</span> <span class="col data">{{customerName
+            ? customerName :
+            '- - - -'}}</span>
+    </div>
+    <div class="row m-0 mb-3"><span class="title col-md-6"> Paid Amount:</span> <span class="col data">{{paidAmount ?
+            paidAmount : ' - - - -'}}</span></div>
+
+    <div class="row m-0 mb-3"><span class="title col-md-6"> Payment Method:</span> <span
+            class="col data">{{paymentMethod ?
+            paymentMethod : ' - - - -'}}</span></div>
+
+    <div class="row m-0 mb-3"><span class="title col-md-6"> Order Transaction Number:</span> <span
+            class="col data">{{orderTransactionNumber ?
+            orderTransactionNumber : ' - - - -'}}</span></div>
+
+    <div class="row m-0 mb-3"><span class="title col-md-6"> Transaction Date:</span> <span
+            class="col data">{{(transactionDate | date) ?
+            (transactionDate | date) : ' - - - -'}}</span></div>
+
+    <div class="row m-0 mb-3"><span class="title col-md-6"> Fiscal Year:</span> <span class="col data">{{fiscalYear ?
+            fiscalYear : ' - - - -'}}</span></div>
+
+    <div class="row m-0 mb-3"><span class="title col-md-6"> Regestered By:</span> <span class="col data">{{registeredBy
+            ?
+            registeredBy : ' - - - -'}}</span></div>
+    <div class="row m-0 mb-3"><span class="title col-md-6"> Remarks:</span> <span class="col data">{{transactionRemarks
+            ?
+            transactionRemarks : ' - - - -'}}</span></div>
+
+</div>
+
+<div class="modal-footer">
+    <div class="row w-100">
+        <div class="col-12">
+            <button type="reset" class="btn w-100 btn-danger ml-1" (click)="currentModal.close('Close click')">
+                <span class="d-none d-sm-block"> Close</span>
+            </button>
+        </div>
+    </div>
+</div>

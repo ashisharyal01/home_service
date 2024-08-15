@@ -1,0 +1,165 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/extensions/choices.js/public/assets/styles/choices.css";
+@import "assets/css/main/app.css";
+@import "ngx-toastr/toastr";
+
+.btn.focus,
+.btn:focus,
+.form-control:focus {
+    box-shadow: none !important;
+}
+
+.breadcrumb {
+    margin-top: 7px;
+    padding-left: 10px;
+    margin-bottom: -2px;
+}
+
+body {
+    font-size: 14px;
+}
+
+a.btn.btn-sm.btn-warning,
+a.btn.btn-sm.btn-danger {
+    padding-top: 1px;
+    padding-bottom: 4px;
+}
+
+.modal-dialog.modal-dialog-centered.modal-dialog-scrollable {
+    margin: 0px;
+}
+
+
+.modal .modal-header i,
+.modal .modal-header svg {
+    font-size: 20px;
+}
+
+.modal-header {
+    background-color: #1A3C62;
+}
+
+.swal2-icon.swal2-warning.swal2-icon-show,
+.swal2-icon.swal2-success.swal2-icon-show {
+    font-size: 13px;
+}
+
+button.swal2-confirm.swal2-styled.swal2-default-outline,
+button.swal2-cancel.swal2-styled,
+button.swal2-confirm.swal2-styled {
+    font-size: 14px;
+}
+
+button.swal2-confirm.swal2-styled {
+    background-color: #1A3C62;
+}
+
+.swal2-popup.swal2-modal.swal2-icon-warning.swal2-show,
+.swal2-popup.swal2-modal.swal2-icon-success.swal2-show {
+    max-width: 27em !important;
+}
+
+.form-select:focus {
+    box-shadow: none;
+}
+
+thead.thead-dark {
+    background: #51585f;
+    color: white;
+}
+
+// Styling for NGX-pagination
+.ngx-pagination .disabled {
+    padding: 5px 10px 5px 10px !important;
+    background: #ffffff !important;
+    color: #435EBE !important;
+    border: 1px solid #435EBE;
+    border-radius: 3px !important;
+    cursor: not-allowed !important;
+}
+
+.ngx-pagination a,
+.ngx-pagination button {
+    background: #ffffff !important;
+    color: #435EBE !important;
+    border: 1px solid #435EBE;
+    padding: 5px 10px 5px 10px !important;
+    border-radius: 3px !important;
+}
+
+.ngx-pagination .current {
+    padding: 5px 10px 5px 10px !important;
+    background: #435EBE !important;
+    color: #ffffff !important;
+    border: 1px solid #435EBE;
+    cursor: default !important;
+    border-radius: 3px !important;
+}
+
+.ngx-pagination .pagination-previous a:before,
+.ngx-pagination .pagination-previous.disabled:before {
+    display: none !important;
+}
+
+.ngx-pagination .pagination-next a:after,
+.ngx-pagination .pagination-next.disabled:after {
+    display: none !important;
+}
+
+// Styling for MultiDropdown select
+.dropdown-list {
+    margin-top: 0px !important;
+    overflow-y: auto !important;
+    max-height: 235px !important;
+}
+
+
+.dropdown-list .filter-textbox {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}
+
+.multiselect-item-checkbox input[type=checkbox]:checked+div:after {
+    transform: rotate(0deg) scale(1.5) !important;
+    background: #343A40 !important;
+    margin-top: 0px !important;
+    border: none !important;
+}
+
+
+span.selected-item {
+    max-width: 100% !important;
+    background-color: transparent !important;
+    border: none !important;
+    color: #434A54 !important;
+}
+
+span.selected-item a {
+    display: none !important;
+}
+
+.dropdown-list .multiselect-item-checkbox input[type=checkbox]+div:before {
+    display: none !important;
+}
+
+.dropdown-list ul {
+    max-height: 100% !important;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(94, 93, 93);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #435EBE;
+    border-radius: 7px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(54, 56, 58);
+}

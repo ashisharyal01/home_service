@@ -1,0 +1,111 @@
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title text-light" id="myModalLabel33"> <i class="bi bi-list"></i>
+                <span *ngIf="isAddMode">
+                    Add Item
+                </span>
+                <span *ngIf="isEditMode">
+                    Edit Item
+                </span>
+            </h4>
+            <button type="button" class="close text-light" data-bs-dismiss="modal" aria-label="Close"
+                (click)="closeModal()">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+        <form [formGroup]="itemsForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                <div class="form-group has-icon-left">
+                    <label class="form-label" i18n="@@name">Item Name <span class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" formControlName="name" id="name" i18n-placeholder
+                            placeholder="Enter item name">
+                        <div class="form-control-icon">
+                            <i class="bi bi-list"></i>
+                        </div>
+                        <small class="form-text text-danger"
+                            *ngIf="itemsForm.controls.name.hasError('required') && itemsForm.controls.name.touched"
+                            style="margin-top: -1rem;">
+                            Item name is required
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group has-icon-left">
+                    <label class="form-label" i18n="@@name"> Address <span class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" formControlName="address" id="name" i18n-placeholder
+                            placeholder="Enter address name">
+                        <div class="form-control-icon">
+                            <i class="bi bi-list"></i>
+                        </div>
+                        <small class="form-text text-danger"
+                            *ngIf="itemsForm.controls.address.hasError('required') && itemsForm.controls.address.touched"
+                            style="margin-top: -1rem;">
+                            address is required
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group has-icon-left">
+                    <label class="form-label" i18n="@@name">Mail <span class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" formControlName="email" id="name" i18n-placeholder
+                            placeholder="Enter mail address">
+                        <div class="form-control-icon">
+                            <i class="bi bi-list"></i>
+                        </div>
+                        <small class="form-text text-danger"
+                            *ngIf="itemsForm.controls.email.hasError('required') && itemsForm.controls.email.touched"
+                            style="margin-top: -1rem;">
+                            mail is required
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group has-icon-left">
+                    <label class="form-label" i18n="@@selectCategory">Select Category <span
+                            class="text-danger">*</span></label>
+                    <div class="form-group">
+                        <select class="choices form-select" i18n-placeholder="@@selectCategory" name="categoryId"
+                            formControlName="categoryId">
+                            <option value="" disabled="true">Select Category Name</option>
+                            <option *ngFor="let categoryList of category" [value]="categoryList.id">
+                                {{ categoryList.categoryName }}
+                            </option>
+                        </select>
+                        <small class="form-text text-danger"
+                            *ngIf="itemsForm.controls.categoryId.hasError('required') && itemsForm.controls.categoryId.touched"
+                            style="margin-top: -1rem;">
+                            Category is required
+                        </small>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-6">
+                        <button *ngIf="isAddMode" type="submit" class="btn w-100 btn-primary" i18n="@@submit"
+                            [disabled]="submitted || !itemsForm.valid">
+                            <span class="d-none d-sm-block"> <span class="spinner-border spinner-border-sm"
+                                    role="status" aria-hidden="true" *ngIf="this.loading"></span> Submit</span>
+                        </button>
+
+                        <button *ngIf="isEditMode" type="submit" class="btn w-100 btn-primary" i18n="@@update"
+                            [disabled]="submitted || !itemsForm.valid">
+                            <span class="d-none d-sm-block"> <span class="spinner-border spinner-border-sm"
+                                    role="status" aria-hidden="true" *ngIf="this.loading"></span> Update</span>
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button type="reset" class="btn w-100 btn-danger ml-1" (click)="closeModal()">
+                            <span class="d-none d-sm-block"> Close</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

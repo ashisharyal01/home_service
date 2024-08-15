@@ -1,0 +1,116 @@
+.card {
+    margin-bottom: 1.2rem !important;
+}
+
+#invoice-temp {
+    box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+    background: #FFF;
+    border-radius: 10px;
+}
+
+th.item {
+    padding: 6px 17px 6px 17px !important;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse !important;
+
+}
+
+.tabletitle {
+    background: #51585F;
+    color: aliceblue;
+    text-align: left;
+    line-height: 0px;
+
+    h3 {
+        color: white;
+    }
+}
+
+.totals {
+    h6 {
+        color: rgb(119, 116, 116);
+    }
+}
+
+
+.totals .amount h3 {
+    color: rgb(119, 116, 116);
+}
+
+.service {
+    border-bottom: 1px solid rgb(119, 116, 116);
+    color: rgb(119, 116, 116);
+    text-align: left;
+    row-gap: 10px;
+    margin-left: 2%;
+    padding-left: 5% !important;
+
+    p {
+        padding-left: 17px;
+        margin-bottom: 5px;
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+}
+
+
+
+.check {
+    background-color: #51585F;
+    padding: 5px;
+    margin-top: 12px;
+}
+
+.first {
+    display: flex;
+}
+
+.invoice {
+    border-top-left-radius: 10px;
+    width: 45%;
+    text-align: center;
+    background-color: #51585F !important;
+
+    h2 {
+        color: white;
+    }
+}
+
+.box_design1 {
+    background-color: #51585F;
+    width: 5%;
+    height: 2rem;
+    margin-top: 20px;
+    margin-left: 30px;
+    text-align: right;
+}
+
+.another1 {
+    width: 45%;
+    text-align: right;
+}
+
+
+
+h3 {
+    font-size: 1.17em !important;
+    font-weight: bold !important;
+}
+
+p {
+    font-weight: 600 !important;
+    font-size: 0.9rem;
+}
+
+.billing-info {
+    padding: 15px;
+    padding-left: 40px;
+}
+
+.amount-info {
+    text-align: center;
+    margin-top: 2%;
+}

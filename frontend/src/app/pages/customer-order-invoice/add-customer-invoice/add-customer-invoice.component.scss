@@ -1,0 +1,47 @@
+#calculationSection {
+    margin-left: auto;
+    width: 35%;
+    margin-right: 2px;
+
+    input {
+        background-color: #FFFFFF;
+        cursor: not-allowed;
+        width: 60%;
+        margin-left: auto;
+        background-color: #c4c5c571;
+    }
+}
+
+#discountAmounts {
+    input {
+        width: 60%;
+        margin-left: auto;
+        background-color: snow;
+        cursor: auto;
+    }
+}
+
+#totalAmount {
+    input {
+        background-color: #FFFFFF;
+        cursor: not-allowed;
+        width: 60%;
+        margin-left: auto;
+        background-color: #c4c5c571;
+    }
+}
+
+.transactionDetails {
+    background-color: #acff2f44;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.breadcumbDetailsCard {
+    margin-bottom: 1.2rem !important;
+}
+
+.setup-heading {
+    display: flex;
+    margin-left: auto;
+}

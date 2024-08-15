@@ -1,0 +1,167 @@
+<div class="card breadcumbDetailsCard mt-5">
+  <div class="card-body p-1">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <h6 class="card-title">{{this.customerDetails?.customerName}} - Invoice & Transactions&nbsp;&nbsp;</h6>
+        <li class="breadcrumb-item"><a [routerLink]="['/pages/dashboard']">(Dashboard </a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/pages/customer']">Customer</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">View Customer Invoice)</li>
+
+        <div class="buttons addButtons">
+          <a class="btn btn-sm btn-primary" (click)="addCustomerTransaction()"
+            *ngIf="this.customerDetails?.payableAmount != 0.0000 "><i class="bi bi-cash-stack"></i>
+            Add Transaction</a>
+        </div>
+      </ol>
+
+
+    </nav>
+  </div>
+</div>
+<div class="main">
+  <div class="row">
+    <div class="sub1 col-md-6 m3">
+      <h5>Invoice Listing</h5>
+      <hr />
+      <div class="row mb-3">
+        <form class="d-flex" [formGroup]="dateForm">
+          <div class="startDate col-md-6">
+            <input type="date" class="form-control" formControlName="startDate"
+              (change)="getStartDateValueOfInvoiceListing($event)" />
+          </div>
+          <div class="endDate col-md-6">
+            <input type="date" class="form-control" formControlName="endDate"
+              (change)="getEndDateValueOfInvoiceListing($event)" />
+          </div>
+        </form>
+      </div>
+      <div class="row blackBg">
+        <div class="search col-md-6">
+          <form class="search-container">
+            <button type="submit"><i class="bi bi-search"></i></button>
+            <input type="text" id="searchBox" placeholder="Search.." name="search"
+              (keyup)="getValueOfSearchedInvoiceListing($event)" />
+
+          </form>
+        </div>
+        <div class="col-md-6">
+          <h5>Payable: Rs. {{(this.customerDetails?.payableAmount|currency:' ':'symbol':'') ?
+            (this.customerDetails?.payableAmount|currency:' ':'symbol':''): ('0.00')}}</h5>
+        </div>
+      </div>
+      <div class="table mt-3">
+        <table class="col-md-12">
+          <tr>
+            <th>S.N.</th>
+            <th>BILL NO.</th>
+            <th>DATE</th>
+            <th>AMOUNT</th>
+          </tr>
+          <tr *ngIf="customerInvoiceDetails?.length == 0 || customerInvoiceDetails?.length == undefined">
+            <td class="text-center" colspan="5" *ngIf="this.displayLoader">
+              <img src="../../../../assets/images/svg-loaders/grid.svg" class="me-4" style="width: 2rem" alt="audio">
+              <div class="mt-2">
+                <h6 scope="col gray-ish">Please Wait</h6>
+              </div>
+            </td>
+
+            <td class="text-muted text-center" colspan="5" *ngIf="this.dispalyNotFoundData">
+              No Customer Invoice Details Found.
+            </td>
+          </tr>
+          <tr *ngIf="customerInvoiceDetails?.length !== 0">
+            <td colspan="4" style="border: none; padding-bottom: 0px;">
+              <div class="alert alert-danger" role="alert">
+                Double click the row to view the invoice!!
+              </div>
+            </td>
+          </tr>
+          <tr class="details" *ngFor="let customerInvoiceDetails of customerInvoiceDetails; index as i"
+            (dblclick)="viewCustomerInvoice(customerInvoiceDetails.id)">
+            <td>{{ i+1 }}</td>
+            <td>{{ customerInvoiceDetails.orderInvoiceNo}}</td>
+            <td>{{ customerInvoiceDetails.orderDate}}</td>
+            <td>
+              {{customerInvoiceDetails.totalOrderAmount|currency:' ':'symbol':''}}
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="row blackBg2">
+        <div class="col col-md-12">
+          <h5>Total Amount: Rs {{(this.totalCalulatedAmountOfCustomerInvoice|currency:' ':'symbol':'')?
+            (this.totalCalulatedAmountOfCustomerInvoice|currency:' ':'symbol':''): ("0.00")}}</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub2 col-md-6">
+      <h5>Transaction Listing</h5>
+      <hr />
+      <div class="row mb-3">
+        <form class="d-flex" [formGroup]="dateForm">
+          <div class="startDate col-md-6">
+            <input type="date" class="form-control" formControlName="startDate"
+              (change)="getStartDateValueOfTransactionListing($event)" />
+          </div>
+          <div class="endDate col-md-6">
+            <input type="date" class="form-control" formControlName="endDate"
+              (change)="getEndDateValueOfTransactionListing($event)" />
+          </div>
+        </form>
+      </div>
+      <div class="row blackBg">
+        <div class="search col-md-6">
+          <form class="search-container">
+            <button type="submit"><i class="bi bi-search"></i></button>
+            <input type="text" id="searchBox" placeholder="Search.." name="search"
+              (keyup)="getValueOfSearchedTransactionListing($event)" />
+          </form>
+        </div>
+      </div>
+      <div class="table mt-3">
+        <table class="col-md-12">
+          <tr>
+            <th>S.N.</th>
+            <th>BILL NO.</th>
+            <th>DATE</th>
+            <th>AMOUNT</th>
+          </tr>
+          <tr *ngIf="customerTransactionDetails?.length == 0 || customerTransactionDetails?.length == undefined">
+            <td class="text-center" colspan="5" *ngIf="this.displayLoader">
+              <img src="../../../../assets/images/svg-loaders/grid.svg" class="me-4" style="width: 2rem" alt="audio">
+              <div class="mt-2">
+                <h6 scope="col gray-ish">Please Wait</h6>
+              </div>
+            </td>
+
+            <td class="text-muted text-center" colspan="5" *ngIf="this.dispalyNotFoundData">
+              No Customer Transaction Details Found.
+            </td>
+          </tr>
+          <tr *ngIf="customerTransactionDetails?.length !== 0 || customerTransactionDetailsForEmpty != null">
+            <td colspan="4" style="border: none; padding-bottom: 0px;">
+              <div class="alert alert-danger" role="alert">
+                Double click the row to view the transaction!!
+              </div>
+            </td>
+          </tr>
+          <tr class="details" *ngFor="let customerTransactionDetails of customerTransactionDetails; index as i"
+            (dblclick)="viewCustomerTransaction(customerTransactionDetails)">
+            <td>{{ i+1 }}</td>
+            <td>{{ customerTransactionDetails.orderTransactionNo}}</td>
+            <td>{{ customerTransactionDetails.transactionDate}}</td>
+            <td>{{customerTransactionDetails.paidAmount|currency:' ':'symbol':''}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="row blackBg2">
+        <div class="col col-md-12">
+          <h5>Paid Amount: Rs {{(this.totalCalulatedAmountOfCustomerTransaction|currency:' ':'symbol':'') ?
+            (this.totalCalulatedAmountOfCustomerTransaction|currency:' ':'symbol':'') : ('0.00')}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

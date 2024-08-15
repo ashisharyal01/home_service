@@ -1,0 +1,27 @@
+<div id="sidebar" class="active">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header position-relative">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="logo">
+                    <a class="d-flex" routerLink="/pages/userProfile"><img src="../../../../assets/images/logo/Logo.png"
+                            alt="Logo" srcset="">
+                        <h6 class="text-light mt-2"> &nbsp;&nbsp;HomeEase</h6>
+                    </a>
+                </div>
+                <div class="sidebar-toggler  x" (click)="closeSideBar()">
+                    <a class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle text-light"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-item" *ngFor="let menuListDetails of menuList" [routerLinkActive]="'active'">
+                    <a routerLink="{{ menuListDetails.link }}" class='sidebar-link'>
+                        <i class="{{ menuListDetails.icon }}"></i>
+                        <span>{{ menuListDetails.title }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
