@@ -16,6 +16,7 @@
         </div>
         <form [formGroup]="itemsForm" (ngSubmit)="onSubmit()">
             <div class="modal-body">
+                <!-- Existing form fields -->
                 <div class="form-group has-icon-left">
                     <label class="form-label" i18n="@@name">Item Name <span class="text-danger">*</span></label>
                     <div class="position-relative">
@@ -32,25 +33,28 @@
                     </div>
                 </div>
 
+                <!-- Address field -->
                 <div class="form-group has-icon-left">
-                    <label class="form-label" i18n="@@name"> Address <span class="text-danger">*</span></label>
+                    <label class="form-label" i18n="@@address">Address <span class="text-danger">*</span></label>
                     <div class="position-relative">
-                        <input type="text" class="form-control" formControlName="address" id="name" i18n-placeholder
-                            placeholder="Enter address name">
+                        <input type="text" class="form-control" formControlName="address" id="address" i18n-placeholder
+                            placeholder="Enter address">
                         <div class="form-control-icon">
                             <i class="bi bi-list"></i>
                         </div>
                         <small class="form-text text-danger"
                             *ngIf="itemsForm.controls.address.hasError('required') && itemsForm.controls.address.touched"
                             style="margin-top: -1rem;">
-                            address is required
+                            Address is required
                         </small>
                     </div>
                 </div>
+
+                <!-- Mail field -->
                 <div class="form-group has-icon-left">
-                    <label class="form-label" i18n="@@name">Mail <span class="text-danger">*</span></label>
+                    <label class="form-label" i18n="@@mail">Mail <span class="text-danger">*</span></label>
                     <div class="position-relative">
-                        <input type="text" class="form-control" formControlName="email" id="name" i18n-placeholder
+                        <input type="text" class="form-control" formControlName="email" id="email" i18n-placeholder
                             placeholder="Enter mail address">
                         <div class="form-control-icon">
                             <i class="bi bi-list"></i>
@@ -58,11 +62,12 @@
                         <small class="form-text text-danger"
                             *ngIf="itemsForm.controls.email.hasError('required') && itemsForm.controls.email.touched"
                             style="margin-top: -1rem;">
-                            mail is required
+                            Mail is required
                         </small>
                     </div>
                 </div>
 
+                <!-- Category selection -->
                 <div class="form-group has-icon-left">
                     <label class="form-label" i18n="@@selectCategory">Select Category <span
                             class="text-danger">*</span></label>
@@ -82,8 +87,27 @@
                     </div>
                 </div>
 
+                <!-- Image Upload -->
+                <div class="form-group has-icon-left">
+                    <label class="form-label" i18n="@@uploadImage">Upload Image <span
+                            class="text-danger">*</span></label>
+                    <div class="position-relative">
+                        <input type="file" class="form-control" (change)="onFileChange($event)" accept="image/*">
+                        <div class="form-control-icon">
+                            <i class="bi bi-upload"></i>
+                        </div>
+                        <small class="form-text text-danger" *ngIf="!uploadedImage && itemsForm.controls.image.touched">
+                            Image is required
+                        </small>
+                    </div>
+                </div>
 
+                <!-- Image Preview -->
+                <div *ngIf="uploadedImage" class="form-group text-center">
+                    <img [src]="uploadedImage" alt="Uploaded Image" class="img-fluid" style="max-width: 100%;">
+                </div>
             </div>
+
             <div class="modal-footer">
                 <div class="row w-100">
                     <div class="col-6">

@@ -21,6 +21,8 @@ export class AddEditItemsComponent implements OnInit {
   @Input() itemId: number;
   itemsForm: FormGroup;
   public category: Category[];
+  uploadedImage: string | ArrayBuffer | null = null;
+
 
 
   constructor(
@@ -77,6 +79,18 @@ export class AddEditItemsComponent implements OnInit {
     }
   }
 
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.uploadedImage = reader.result;
+        this.itemsForm.patchValue({ image: file });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
 
   private createItems() {

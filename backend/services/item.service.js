@@ -1,25 +1,83 @@
 const model = require("../models");
 const { Op } = require("sequelize");
+const multer = require("multer");
+const path = require("path");
+
+// multer configuration for handling the filename and destination of files
+const storage = multer.diskStorage({
+  destination: (req, file, storeFileFunction) => {
+    storeFileFunction(null, "./uploads/images");
+  },
+
+  filename: (req, file, fileInfoFunction) => {
+    const fileName = `${Date.now()}-${file.originalname}`;
+    fileInfoFunction(null, fileName);
+  },
+});
+
+// function for uploading single files
+const fileUploadData = multer({ storage }).single("filename");
 
 exports.saveItem = async (req, res) => {
-  const itemData = {
-    name: req.body.name,
-    address: req.body.address,
-    email: req.body.email,
-    categoryId: req.body.categoryId,
-  };
   try {
-    let newItem = await model.Item.create(itemData);
-    res.status(201).json({
-      message: "Item created sucessfully",
-      data: newItem,
+    fileUploadData(req, res, async (error) => {
+      if (error) {
+        console.error(error);
+        return res
+          .status(500)
+          .json({ error: "Error while uploading the file" });
+      }
+      const newFileData = await model.Item.create({
+        name: req.body.name,
+        address: req.body.address,
+        email: req.body.email,
+        categoryId: req.body.categoryId,
+        filename: req.file.filename,
+      });
+
+      return res
+        .status(201)
+        .json({ message: "File uploaded successfully!!", data: newFileData });
     });
-  } catch (err) {
-    res.status(500).json({
-      error: err.message,
-      message: "Internal Server Error",
-    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error!!" });
   }
+
+  // console.log(fileUploadData, "some");
+  // try {
+  //   console.log("hello");
+  //   fileUploadData(req, res, (error) => {
+  //     if (error) {
+  //       console.error(error);
+  //       return res
+  //         .status(500)
+  //         .json({ error: "Error while uploading the file" });
+  //     }
+  //   });
+  //   const itemData = {
+  //     name: req.body.name,
+  //     address: req.body.address,
+  //     email: req.body.email,
+  //     categoryId: req.body.categoryId,
+  //     filename: req.file.filename,
+  //   };
+  //   try {
+  //     let newItem = await model.Item.create(itemData);
+  //     res.status(201).json({
+  //       message: "Item created sucessfully",
+  //       data: newItem,
+  //     });
+  //   } catch (err) {
+  //     res.status(500).json({
+  //       error: err.message,
+  //       message: "Internal Server Error",
+  //     });
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  //   return res.status(500).json({ message: "Internal Server Error!!" });
+  // }
 };
 
 exports.getItem = async (req, res) => {
